@@ -14,10 +14,10 @@ public class OrderQueryRepository {
 
     //OrderApiController - 4번
     public List<OrderQueryDto> findOrderQueryDtos() {
-        List<OrderQueryDto> result = findOrders();
+        List<OrderQueryDto> result = findOrders(); //query 1번 -> N개
 
         result.forEach(o -> {
-            List<OrderItemQueryDto> orderItems = findOrderItems(o.getOrderId());
+            List<OrderItemQueryDto> orderItems = findOrderItems(o.getOrderId()); //query N번
             o.setOrderItems(orderItems);
         });
 
