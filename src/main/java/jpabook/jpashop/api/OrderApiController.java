@@ -84,6 +84,9 @@ public class OrderApiController {
         return collect;
     }
 
+    /**
+     * XToOne 관계들을 먼저 조회, XToMany 관계는 각각 별도로 처리.
+     */
     @GetMapping("/api/v4/orders")
     public List<OrderQueryDto> ordersV4() {
         return orderQueryRepository.findOrderQueryDtos();

@@ -26,7 +26,7 @@ public class OrderQueryRepository {
 
     private List<OrderItemQueryDto> findOrderItems(Long orderId) {
         return em.createQuery(
-                "select new jpabook.jpashop.repository.order.query.OrderItemQueryDto(oi.order.id, i.name, oi.orderPrice, oi.count)" +
+                "select new jpabook.jpashop.repository.order.query.OrderItemQueryDto(oi.order.id, i.name, oi.orderPrice, oi.count) " +
                         "from OrderItem oi " +
                         "join oi.item i " +
                         "where oi.order.id = :orderId", OrderItemQueryDto.class)
@@ -36,10 +36,10 @@ public class OrderQueryRepository {
 
     private List<OrderQueryDto> findOrders() {
         return em.createQuery(
-                        "select new jpabook.jpashop.repository.order.query.OrderQueryDto(o.id, o.name, o.orderDate, o.status, d.address) " +
-                                "from order o " +
-                                "join o.member m " +
-                                "join o.delivery d", OrderQueryDto.class)
+                "select new jpabook.jpashop.repository.order.query.OrderQueryDto(o.id, o.name, o.orderDate, o.status, d.address) " +
+                        "from order o " +
+                        "join o.member m " +
+                        "join o.delivery d", OrderQueryDto.class)
                 .getResultList();
     }
 }
