@@ -55,11 +55,11 @@ public class OrderSimpleApiController {
 
     /**
      * 엔티티를 DTO 로 변환하여 조회 (우선 이 방법을 사용해보자)
+     * fetch join 을 이용한 방법 -> 정말 많이 사용하므로 꼭 100퍼센트 이해하고 넘어가자!!
+     * SQL 1번 실행
      */
     @GetMapping("/api/v3/simple-orders")
     public List<SimpleOrderDto> ordersV3() {
-        //fetch join 을 이용한 방법 -> 정말 많이 사용하므로 꼭 100퍼센트 이해하고 넘어가자!!
-        //SQL 1번 실행
         List<Order> orders = orderRepository.findAllWithMemberDelivery(); //order -> member, delivery
         List<SimpleOrderDto> result = orders.stream().map(o -> new SimpleOrderDto(o)).toList();
 
@@ -68,11 +68,10 @@ public class OrderSimpleApiController {
 
     /**
      * DTO 로 바로 조회
+     * new 명령어를 사용해서 JPQL 의 결과를 DTO 로 즉시 변환 (V3과 성능차이가 미비하다.)
      */
     @GetMapping("/api/v4/simple-orders")
     public List<OrderSimpleQueryDto> ordersV4() {
-        //new 명령어를 사용해서 JPQL 의 결과를 DTO 로 즉시 변환
-        //V3과 성능차이가 미비하다.
         return orderSimpleQueryRepository.findOrderDtos();
     }
 
