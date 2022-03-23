@@ -6,6 +6,8 @@ import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
 import jpabook.jpashop.repository.OrderSimpleQueryDto;
+import jpabook.jpashop.repository.order.query.OrderQueryRepository;
+import jpabook.jpashop.repository.order.simpleQuery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,7 @@ import java.util.List;
 public class OrderSimpleApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
     //엔티티를 API 응답으로 외부로 노출 x -> DTO 로 변환해서 반환하자
     @GetMapping("/api/v1/simple-orders")
@@ -71,7 +74,7 @@ public class OrderSimpleApiController {
     public List<OrderSimpleQueryDto> ordersV4() {
         //new 명령어를 사용해서 JPQL 의 결과를 DTO 로 즉시 변환
         //V3과 성능차이가 미비하다.
-        return orderRepository.findOrderDtos();
+        return orderSimpleQueryRepository.findOrderDtos();
     }
 
     @Data

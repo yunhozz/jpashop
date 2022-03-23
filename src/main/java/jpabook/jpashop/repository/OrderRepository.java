@@ -114,16 +114,6 @@ public class OrderRepository {
                 .getResultList();
     }
 
-    //OrderSimpleApiController - 4번
-    public List<OrderSimpleQueryDto> findOrderDtos() {
-        return em.createQuery(
-                "select new jpabook.jpashop.repository.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address)" +
-                        " from Order o" +
-                        " join o.member m" +
-                        " join o.delivery d", OrderSimpleQueryDto.class)
-                .getResultList();
-    }
-
     //OrderApiController - 3번
     public List<Order> findAllWithItem() {
         return em.createQuery(
@@ -145,6 +135,4 @@ public class OrderRepository {
                 .setMaxResults(limit)
                 .getResultList();
     }
-
-    //OrderApiController - 4번
 }

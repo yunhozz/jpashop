@@ -4,8 +4,10 @@ import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
+import jpabook.jpashop.repository.order.query.OrderQueryDto;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
+import jpabook.jpashop.repository.order.query.OrderQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,7 @@ import java.util.List;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
 
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() {
@@ -50,7 +53,10 @@ public class OrderApiController {
         return collect;
     }
 
-    //OneToMany 상황에서 데이터가 뻥튀기 된다. -> (sql) distinct 추가하여 중복 조회 제거!! -> 단, 페이징(데이터 개수 설정) 불가능!
+    /**
+     * OneToMany 상황에서 데이터가 뻥튀기 된다.
+     *  -> (SQL) distinct 추가하여 데이터 중복 조회를 제거한다!! 단, 페이징(데이터 개수 설정) 불가능!! -> v3.1
+     */
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
         List<Order> orders = orderRepository.findAllWithItem(); //order -> member, delivery, orderItem, item
@@ -61,9 +67,11 @@ public class OrderApiController {
         return collect;
     }
 
-    //페이징 적용 방법
-    //XToOne 관계를 모두 fetch join 한다. 컬렉션은 지연로딩으로 조회한다. -> default_batch_fetch_size(application), @BatchSize(개별)
-    //1 x m x n -> 1 x 1 x 1 와 같은 어마어마한 효과를 볼 수 있다.
+    /**
+     * 페이징 적용 방법
+     * XToOne 관계를 모두 fetch join 한다. 컬렉션은 지연로딩으로 조회한다. -> default_batch_fetch_size(application), @BatchSize(개별)
+     * 1 x m x n -> 1 x 1 x 1 와 같은 어마어마한 효과를 볼 수 있다.
+     */
     @GetMapping("/api/v3.1/orders")
     public List<OrderDto> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
                                         @RequestParam(value = "limit", defaultValue = "100") int limit) {
@@ -77,8 +85,8 @@ public class OrderApiController {
     }
 
     @GetMapping("/api/v4/orders")
-    public List<OrderDto> ordersV4() {
-
+    public List<OrderQueryDto> ordersV4() {
+        return orderQueryRepository.findOrderQueryDtos();
     }
 
     @Data
