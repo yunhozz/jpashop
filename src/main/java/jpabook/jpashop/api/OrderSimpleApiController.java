@@ -58,7 +58,7 @@ public class OrderSimpleApiController {
     public List<SimpleOrderDto> ordersV3() {
         //fetch join 을 이용한 방법 -> 정말 많이 사용하므로 꼭 100퍼센트 이해하고 넘어가자!!
         //SQL 1번 실행
-        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(); //order -> member, delivery
         List<SimpleOrderDto> result = orders.stream().map(o -> new SimpleOrderDto(o)).toList();
 
         return result;

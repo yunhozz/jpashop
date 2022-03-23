@@ -53,7 +53,7 @@ public class OrderApiController {
     //일대다 상황에서 데이터가 뻥튀기 된다. -> sql distinct 추가하여 중복 조회 제거!! -> 단, 페이징(데이터 개수 설정) 불가능!
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
-        List<Order> orders = orderRepository.findAllWithItem();
+        List<Order> orders = orderRepository.findAllWithItem(); //order -> member, delivery, orderItem, item
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))
                 .toList();
@@ -63,10 +63,12 @@ public class OrderApiController {
 
     //페이징 한계 돌파
     //XToOne 관계를 모두 fetch join 한다. 컬렉션은 지연로딩으로 조회한다. -> @BatchSize, default_batch_fetch_size (application)
+    //1 x m x n -> 1 x 1 x 1 와 같은 어마어마한 효과를 볼 수 있다.
     @GetMapping("/api/v3.1/orders")
     public List<OrderDto> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
                                         @RequestParam(value = "limit", defaultValue = "100") int limit) {
-        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit); //order -> member, order -> delivery
+
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit); //order -> member, delivery
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o)) //orderItems 조회 -> item 조회 (lazy)
                 .toList();
