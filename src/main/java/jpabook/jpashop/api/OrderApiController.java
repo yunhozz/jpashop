@@ -68,8 +68,8 @@ public class OrderApiController {
     }
 
     /**
-     * 페이징 적용 방법
-     * XToOne 관계를 모두 fetch join 한다. 컬렉션은 지연로딩으로 조회한다. -> default_batch_fetch_size(application), @BatchSize(개별)
+     * 페이징 적용
+     * XToOne 관계를 모두 fetch join 하고, XToMany 관계는 지연로딩으로 조회한다. -> default_batch_fetch_size(application), @BatchSize(개별)
      * 1 x m x n -> 1 x 1 x 1 와 같은 어마어마한 효과를 볼 수 있다.
      */
     @GetMapping("/api/v3.1/orders")
