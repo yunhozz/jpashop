@@ -31,6 +31,16 @@ public class OrderApiController {
     private final OrderRepository orderRepository;
     private final OrderQueryRepository orderQueryRepository;
 
+    /**
+     * v1 : 엔티티를 조회해서 그대로 반환
+     * v2 : 엔티티 조회 후 DTO 로 변환
+     * v3 : 페치 조인으로 쿼리 수 최적화
+     * v3.1 : 컬렉션 페이징과 한계 돌파
+     * v4 : JPA 에서 DTO 를 직접 조회
+     * v5 : 컬렉션 조회 최적화 - 일대다 관계인 컬렉션은 in 절을 활용해서 메모리에 미리 조회해서 최적화
+     * v6 : 플랫 데이터 최적화 - join 결과를 그대로 조회 후 애플리케이션에서 원하는 모양으로 직접 변환
+     */
+
     @GetMapping("/api/v1/orders")
     public List<Order> ordersV1() {
         List<Order> all = orderRepository.findAllByString(new OrderSearch());
@@ -57,8 +67,9 @@ public class OrderApiController {
     }
 
     /**
+     * 페치 조인으로 쿼리 수 최적화
      * OneToMany 상황에서 데이터가 뻥튀기 된다.
-     *  -> (SQL) distinct 추가하여 데이터 중복 조회를 제거한다!! 단, 페이징(데이터 개수 설정) 불가능!! -> v3.1
+     * (SQL) distinct 추가하여 데이터 중복 조회를 제거한다!! 단, 페이징(데이터 개수 설정) 불가능!! -> v3.1
      */
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
@@ -111,6 +122,7 @@ public class OrderApiController {
     public List<OrderQueryDto> ordersV6() {
         List<OrderFlatDto> flats = orderQueryRepository.findAllByDto_flat();
 
+        //OrderFlatDto -> OrderQueryDto 변환
         return flats.stream()
                 .collect(Collectors.groupingBy(o -> new OrderQueryDto(o.getOrderId(), o.getName(), o.getOrderDate(),
                                 o.getOrderStatus(), o.getAddress()),
@@ -121,7 +133,6 @@ public class OrderApiController {
                         e.getKey().getOrderStatus(), e.getKey().getAddress(), e.getValue()))
                 .toList();
     }
-
 
     @Data
     static class OrderDto {
