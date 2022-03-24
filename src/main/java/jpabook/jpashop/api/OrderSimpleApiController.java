@@ -77,6 +77,7 @@ public class OrderSimpleApiController {
 
     @Data
     static class SimpleOrderDto {
+
         private Long orderId;
         private String name;
         private LocalDateTime orderDate;
