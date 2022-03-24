@@ -14,7 +14,7 @@ public class OrderQueryRepository {
 
     private final EntityManager em;
 
-    //OrderApiController - 4번
+    //OrderApiController - v4
     public List<OrderQueryDto> findOrderQueryDtos() {
         List<OrderQueryDto> result = findOrders(); //query 1번 -> N개
 
@@ -26,7 +26,7 @@ public class OrderQueryRepository {
         return result;
     }
 
-    //OrderApiController - 5번
+    //OrderApiController - v5
     public List<OrderQueryDto> findAllByDto_optimization() {
         List<OrderQueryDto> result = findOrders(); //XToOne 관계 모두 한번에 조회
         List<Long> orderIds = toOrderIds(result);
@@ -38,7 +38,7 @@ public class OrderQueryRepository {
         return result;
     }
 
-    //OrderApiController - 6번
+    //OrderApiController - v6
     public List<OrderFlatDto> findAllByDto_flat() {
         return em.createQuery(
                 "select new jpabook.jpashop.repository.order.query.OrderFlatDto(o.id, m.name, o.orderDate, o.status, d.address, i.name, oi.orderPrice, oi.count) " +

@@ -60,6 +60,10 @@ public class OrderApiController {
         return all;
     }
 
+    /**
+     * 엔티티 조회 후 DTO 변환
+     * 하지만, OneToMany 상황에서 데이터가 뻥튀기 된다. -> v3
+     */
     @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2() {
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
@@ -72,7 +76,6 @@ public class OrderApiController {
 
     /**
      * 페치 조인으로 쿼리 수 최적화
-     * OneToMany 상황에서 데이터가 뻥튀기 된다.
      * (SQL) distinct 추가하여 데이터 중복 조회를 제거한다!! 단, 페이징(데이터 개수 설정) 불가능!! -> v3.1
      */
     @GetMapping("/api/v3/orders")
