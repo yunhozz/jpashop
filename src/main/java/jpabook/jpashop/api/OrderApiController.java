@@ -62,7 +62,7 @@ public class OrderApiController {
 
     /**
      * 엔티티 조회 후 DTO 변환
-     * fetch join 사용 x
+     * fetch join, distinct 사용 x
      */
     @GetMapping("/api/v2/orders")
     public List<OrderDto> ordersV2() {
