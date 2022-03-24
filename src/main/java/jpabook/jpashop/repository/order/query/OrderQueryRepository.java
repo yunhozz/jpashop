@@ -29,8 +29,8 @@ public class OrderQueryRepository {
     //OrderApiController - v5
     public List<OrderQueryDto> findAllByDto_optimization() {
         List<OrderQueryDto> result = findOrders(); //XToOne 관계 모두 한번에 조회
-        List<Long> orderIds = toOrderIds(result);
-        Map<Long, List<OrderItemQueryDto>> orderItemMap = findOrderItemMap(orderIds);
+        List<Long> orderIds = toOrderIds(result); //order id 컬렉션 조회
+        Map<Long, List<OrderItemQueryDto>> orderItemMap = findOrderItemMap(orderIds); //orderItem map 형식으로 조회
 
         //루프를 돌면서 컬렉션 추가 (추가 쿼리 실행 x)
         result.forEach(o -> o.setOrderItems(orderItemMap.get(o.getOrderId())));
