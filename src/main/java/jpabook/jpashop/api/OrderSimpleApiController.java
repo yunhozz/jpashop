@@ -48,7 +48,9 @@ public class OrderSimpleApiController {
         //ORDER N번
         //N + 1 문제 발생 -> 1 + 회원 N + 배송 N -> SQL (2N + 1)번 실행 (V1 과 쿼리수 결과는 같다)
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
-        List<SimpleOrderDto> result = orders.stream().map(o -> new SimpleOrderDto(o)).toList();
+        List<SimpleOrderDto> result = orders.stream()
+                .map(o -> new SimpleOrderDto(o))
+                .toList();
 
         return result;
     }
