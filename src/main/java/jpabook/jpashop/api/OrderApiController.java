@@ -76,7 +76,8 @@ public class OrderApiController {
 
     /**
      * 페치 조인으로 쿼리 수 최적화
-     * 하지만, OneToMany 상황에서 데이터가 뻥튀기 된다.
+     * XToOne -> fetch join
+     * 하지만, XToMany 상황에서 데이터가 뻥튀기 된다.
      * (SQL) distinct 추가하여 데이터 중복 조회를 제거한다!! 단, 페이징(데이터 개수 설정) 불가능!! -> v3.1
      */
     @GetMapping("/api/v3/orders")
