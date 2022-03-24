@@ -30,7 +30,7 @@ public class Order {
      * 연관관계는 꼭 필요한 경우에만 설정하는 것이 좋다. -> 비즈니스 상황에 맞추어 최소화한다.
      * 실무에서 모든 연관관계는 꼭! 즉시로딩(EAGER)이 아닌 지연로딩(LAZY)으로 설정해야 한다. -> 모든 @ManyToOne, @OneToOne 에 추가!!!
      * 보통, @ManyToOne 과 @JoinColumn 이 같이 쓰이고, @OneToMany 와 mappedBy 가 같이 쓰인다.
-     * @OneToOne 의 경우 외래키를 가지는 도메인을 주인으로 설정한다.
+     * .@OneToOne 의 경우 외래키를 가지는 도메인을 주인으로 설정한다.
      */
 
     /**
