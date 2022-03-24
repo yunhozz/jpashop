@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@EqualsAndHashCode(of = "orderId") //mapping 할 때 자동으로 맞춰줌
+@EqualsAndHashCode(of = "orderId") //mapping 할 때의 기준 선언
 public class OrderQueryDto {
 
     private Long orderId;
