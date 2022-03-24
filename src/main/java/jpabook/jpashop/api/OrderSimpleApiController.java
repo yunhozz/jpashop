@@ -17,9 +17,7 @@ import java.util.List;
 
 /**
  * ManyToOne, OneToOne 에서의 성능 최적화
- * Order
- * Order -> Member
- * Order -> Delivery
+ * Order -> Member, Delivery
  */
 @RestController
 @RequiredArgsConstructor
