@@ -34,7 +34,7 @@ public class OrderApiController {
     /**
      * v1 : 엔티티를 조회해서 그대로 반환
      * v2 : 엔티티 조회 후 DTO 로 변환
-     * v3 : 페치 조인으로 쿼리 수 최적화
+     * v3 : 페치 조인으로 쿼리 수 최적화 - 페이징이 불가능
      * v3.1 : 컬렉션 페이징과 한계 돌파
      * v4 : JPA 에서 DTO 를 직접 조회
      * v5 : 컬렉션 조회 최적화 - 일대다 관계인 컬렉션은 in 절을 활용해서 메모리에 미리 조회해서 최적화
@@ -83,7 +83,8 @@ public class OrderApiController {
 
     /**
      * 페이징 적용
-     * XToOne 관계를 모두 fetch join 하고, XToMany 관계는 지연로딩으로 조회한다. -> default_batch_fetch_size(application), @BatchSize(개별)
+     * XToOne 관계를 모두 fetch join 하고, XToMany 관계는 지연로딩으로 조회한다.
+     *  -> hibernate.default_batch_fetch_size(application), @BatchSize(개별)
      * 1 x m x n -> 1 x 1 x 1 와 같은 어마어마한 효과를 볼 수 있다.
      */
     @GetMapping("/api/v3.1/orders")
