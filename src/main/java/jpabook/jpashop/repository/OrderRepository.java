@@ -105,7 +105,7 @@ public class OrderRepository {
         return query.getResultList();
     }
 
-    //OrderSimpleApiController - v3
+    //OrderSimpleApiController - v3 (order -> member, delivery)
     public List<Order> findAllWithMemberDelivery() {
         return em.createQuery(
                 "select o from Order o " +
@@ -114,7 +114,7 @@ public class OrderRepository {
                 .getResultList();
     }
 
-    //OrderApiController - v3
+    //OrderApiController - v3 (order -> member, delivery, orderItems, item)
     public List<Order> findAllWithItem() {
         return em.createQuery(
                 "select distinct o from Order o " +
@@ -125,7 +125,7 @@ public class OrderRepository {
                 .getResultList();
     }
 
-    //OrderApiController - v3.1
+    //OrderApiController - v3.1 (order -> member, delivery -> 페이징)
     public List<Order> findAllWithMemberDelivery(int offset, int limit) {
         return em.createQuery(
                 "select o from Order o " +
