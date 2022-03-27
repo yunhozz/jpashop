@@ -115,7 +115,7 @@ public class OrderRepository {
     }
 
     //OrderApiController - v3 (order -> member, delivery, orderItems, item)
-    public List<Order> findAllWithItem() {
+    public List<Order> findAllWithOrderItem() {
         return em.createQuery(
                 "select distinct o from Order o " +
                         "join fetch o.member m " +

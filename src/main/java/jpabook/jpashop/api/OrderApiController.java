@@ -82,7 +82,7 @@ public class OrderApiController {
      */
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
-        List<Order> orders = orderRepository.findAllWithItem(); //order -> member, delivery, orderItem, item
+        List<Order> orders = orderRepository.findAllWithOrderItem(); //order -> member, delivery, orderItem, item
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))
                 .toList();
