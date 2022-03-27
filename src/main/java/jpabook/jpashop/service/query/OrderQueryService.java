@@ -4,6 +4,7 @@ import jpabook.jpashop.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 @Transactional(readOnly = true)
@@ -15,4 +16,13 @@ public class OrderQueryService {
      */
 
     private final OrderRepository orderRepository;
+
+//    @GetMapping("/api/v3/orders")
+//    public List<OrderDto> ordersV3() {
+//        List<Order> orders = orderRepository.findAllWithItem();
+//
+//        return orders.stream()
+//                .map(OrderDto::new)
+//                .collect(toList());
+//    }
 }
