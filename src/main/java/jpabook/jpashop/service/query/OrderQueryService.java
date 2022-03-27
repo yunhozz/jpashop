@@ -19,7 +19,7 @@ public class OrderQueryService {
 
 //    @GetMapping("/api/v3/orders")
 //    public List<OrderDto> ordersV3() {
-//        List<Order> orders = orderRepository.findAllWithItem();
+//        List<Order> orders = orderRepository.findAllWithOrderItem();
 //
 //        return orders.stream()
 //                .map(OrderDto::new)
